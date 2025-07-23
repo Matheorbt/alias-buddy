@@ -1,0 +1,197 @@
+# Cursor Rules for SaaS Template Development
+
+## 🏗️ Architecture Principles
+
+You are working on a **SaaS template project** with clear separation between **CORE reusable components** and **BUSINESS-SPECIFIC logic**.
+
+### Core vs Business Logic Separation
+
+**ALWAYS respect this separation:**
+
+- **CORE (✅ Reusable)**: `components/core/`, `components/ui/`, core parts of `constants/`, `lib/`, `hooks/`
+- **BUSINESS (❌ Project-specific)**: `components/business/`, business parts of `constants/`, project-specific API routes
+
+## 📋 Development Rules
+
+### 1. **File Organization**
+
+```
+ALWAYS put files in the correct location:
+- UI components → components/ui/ (reusable design system)
+- Core functionality → components/core/ (reusable across SaaS projects)
+- Business logic → components/business/ (specific to alias-buddy)
+- Constants → constants/ (separate CORE_ and BUSINESS_ prefixes)
+- Hooks → hooks/ (name clearly if core or business-specific)
+- Services → lib/ (mostly reusable configurations)
+```
+
+### 2. **Naming Conventions**
+
+```typescript
+// Constants - Always prefix with CORE_ or BUSINESS_
+export const CORE_FEATURE_FLAGS = { ... }
+export const BUSINESS_FEATURE_FLAGS = { ... }
+
+// Components - Use descriptive names
+const AnalyticsProvider = () => { ... }  // Core
+const AliasEditor = () => { ... }        // Business
+
+// Hooks - Prefix with 'use'
+usePosthog()  // Core
+useAliases()  // Business
+
+// Event handlers - Prefix with 'handle'
+const handleClick = () => { ... }
+const handleSubmit = () => { ... }
+```
+
+### 3. **TypeScript Requirements**
+
+- **ALWAYS use TypeScript** with strict mode
+- **Define types** for all props, hooks, and functions
+- **Use const assertions** for constants: `as const`
+- **Export types** when needed by other files
+
+### 4. **React Patterns**
+
+```typescript
+// Use consts instead of functions
+const Button: React.FC<ButtonProps> = ({ ... }) => { ... }
+
+// Early returns for better readability
+const Component = ({ user }) => {
+  if (!user) return <div>Loading...</div>
+  if (user.blocked) return <div>Access denied</div>
+  
+  return <div>Welcome {user.name}</div>
+}
+
+// Destructure props clearly
+const Button = ({ 
+  variant = 'default', 
+  size = 'md', 
+  className,
+  children,
+  ...props 
+}) => { ... }
+```
+
+### 5. **Styling Rules**
+
+- **ONLY use Tailwind CSS** - no custom CSS files except globals.css
+- **Use `cn()` utility** for conditional classes
+- **Use `class:` syntax** when possible instead of ternary operators
+- **Implement accessibility** - always add proper ARIA labels, tabindex, etc.
+
+```typescript
+// Good
+<button 
+  className={cn(
+    "px-4 py-2 rounded",
+    variant === 'primary' && "bg-blue-500",
+    disabled && "opacity-50"
+  )}
+  aria-label="Submit form"
+  tabIndex={0}
+>
+
+// Bad - don't use ternary for classes
+<button className={`px-4 py-2 ${variant === 'primary' ? 'bg-blue-500' : ''}`}>
+```
+
+### 6. **Constants Usage**
+
+```typescript
+// ALWAYS use constants instead of hardcoding
+import { ROUTES } from '@/constants/routes'
+import { FEATURE_FLAGS } from '@/constants/featureFlags'
+
+// Good
+navigate(ROUTES.DASHBOARD)
+if (isFeatureEnabled(FEATURE_FLAGS.WELCOME_BANNER)) { ... }
+
+// Bad
+navigate('/dashboard')
+if (isFeatureEnabled('welcome-banner')) { ... }
+```
+
+### 7. **Environment Variables**
+
+- **NEVER hardcode** environment variables
+- **ALWAYS use** the `ENV` object from `constants/env.ts`
+- **Document** new environment variables in `.env.example`
+
+```typescript
+// Good
+import { ENV } from '@/constants/env'
+posthog.init(ENV.POSTHOG_KEY)
+
+// Bad
+posthog.init(process.env.NEXT_PUBLIC_POSTHOG_KEY!)
+```
+
+### 8. **Service Integration**
+
+When adding new services (Stripe, Supabase, etc.):
+
+1. **Add environment variables** to `constants/env.ts`
+2. **Create service file** in `lib/serviceName.ts`
+3. **Create hooks** in `hooks/useServiceName.ts`
+4. **Update .env.example**
+5. **Document in README**
+
+### 9. **Feature Flags & Analytics**
+
+```typescript
+// Always use the hooks
+import { usePosthog } from '@/hooks/usePosthog'
+
+const { identify, capture, isFeatureEnabled } = usePosthog()
+
+// Track user actions
+capture('button_clicked', { location: 'header', type: 'cta' })
+
+// Feature gates
+if (isFeatureEnabled(FEATURE_FLAGS.NEW_EDITOR)) {
+  return <NewEditor />
+}
+```
+
+### 10. **Component Creation Checklist**
+
+Before creating any component, ask:
+
+- [ ] Is this **core functionality** (reusable) or **business logic** (alias-buddy specific)?
+- [ ] Does a similar component already exist in `components/ui/` or `components/core/`?
+- [ ] Are all props properly typed?
+- [ ] Are event handlers named with `handle` prefix?
+- [ ] Are accessibility attributes included?
+- [ ] Are constants used instead of hardcoded values?
+
+## 🚫 Common Mistakes to Avoid
+
+- **Don't mix business and core logic** in the same file
+- **Don't create duplicate functionality** - check existing components first
+- **Don't hardcode values** - always use constants
+- **Don't skip TypeScript types** - type everything
+- **Don't use custom CSS** - use Tailwind only
+- **Don't forget accessibility** - add ARIA labels and keyboard navigation
+
+## 🎯 Template Mindset
+
+When writing code, always think:
+> "If I were to use this as a template for a different SaaS, what would I need to change?"
+
+**Core components should need ZERO changes.**
+**Business components should be easily replaceable.**
+
+## ✅ Code Quality Standards
+
+- **Readable** > Performance (unless performance is critical)
+- **Consistent** naming and structure
+- **Well-typed** with TypeScript
+- **Accessible** with proper ARIA attributes
+- **Maintainable** with clear separation of concerns
+- **Documented** with clear comments for complex logic
+
+Remember: This template will be reused for multiple SaaS projects. Every decision should consider future reusability and maintainability. 
