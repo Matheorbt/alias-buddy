@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -33,16 +33,32 @@ const AliasGenerator: React.FC<AliasGeneratorProps> = ({ onAliasesGenerated }) =
     clearFormData 
   } = useAliasGeneration()
 
+  const [isClient, setIsClient] = useState(false)
   const [formData, setFormData] = useState<AliasFormData>({
     baseEmail: '',
     feature: '',
-    includeDate: formSettings.includeDate ?? true,
+    includeDate: true, // Always start with default to avoid hydration mismatch
     project: '',
-    environment: formSettings.environment ?? 'dev',
-    quantity: formSettings.quantity ?? 1,
-    useTempDomain: formSettings.useTempDomain ?? false,
-    tempDomain: formSettings.tempDomain ?? BUSINESS_TEMP_DOMAINS[0],
+    environment: 'dev', // Always start with default to avoid hydration mismatch
+    quantity: 1, // Always start with default to avoid hydration mismatch
+    useTempDomain: false, // Always start with default to avoid hydration mismatch
+    tempDomain: BUSINESS_TEMP_DOMAINS[0],
   })
+
+  // Ensure we only show client-side data after hydration
+  useEffect(() => {
+    setIsClient(true)
+    
+    // Update form data with saved settings after client hydration
+    setFormData(prev => ({
+      ...prev,
+      includeDate: formSettings.includeDate ?? true,
+      environment: formSettings.environment ?? 'dev',
+      quantity: formSettings.quantity ?? 1,
+      useTempDomain: formSettings.useTempDomain ?? false,
+      tempDomain: formSettings.tempDomain ?? BUSINESS_TEMP_DOMAINS[0],
+    }))
+  }, [formSettings])
 
   const handleInputChange = (field: keyof AliasFormData, value: any) => {
     setFormData(prev => ({
@@ -163,9 +179,9 @@ const AliasGenerator: React.FC<AliasGeneratorProps> = ({ onAliasesGenerated }) =
               value={formData.project}
               onChange={(e) => handleInputChange('project', e.target.value)}
               className={`transition-all duration-200 ${errors.project ? 'border-red-300 focus:border-red-500' : 'focus:border-green-500'}`}
-              list="recent-projects"
+              list={isClient && recentProjects.length > 0 ? "recent-projects" : undefined}
             />
-            {recentProjects.length > 0 && (
+            {isClient && recentProjects.length > 0 && (
               <datalist id="recent-projects">
                 {recentProjects.map(project => (
                   <option key={project} value={project} />

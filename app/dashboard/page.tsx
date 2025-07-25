@@ -60,12 +60,20 @@ export default function DashboardPage() {
           </div>
         )}
 
-        {/* Footer */}
-        <div className="text-center mt-16 pt-8 border-t border-gray-200">
-          <p className="text-gray-500 text-sm">
-            Built with ❤️ for developers who value their time and privacy
-          </p>
-        </div>
+                 {/* Footer */}
+         <div className="text-center mt-16 pt-8 border-t border-gray-200">
+           <p className="text-gray-500 text-sm">
+             Built with ❤️ for developers who value their time and privacy by{" "}
+             <a 
+               href="https://x.com/matheorbt_" 
+               target="_blank" 
+               rel="noopener noreferrer"
+               className="text-blue-600 hover:text-blue-700 transition-colors duration-200 font-medium"
+             >
+               @matheorbt_
+             </a>
+           </p>
+         </div>
       </div>
     </div>
   );

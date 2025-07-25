@@ -32,7 +32,7 @@ const EmailPreview: React.FC<EmailPreviewProps> = ({ aliases, onClear }) => {
   }
 
   const handleCopyIndividual = (email: string) => {
-    capture('alias_copied', { type: 'individual', email })
+    capture('alias_copied', { type: 'individual' })
   }
 
   const handleExportCSV = () => {
