@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import Image from "next/image";
 import { usePosthog } from "@/hooks/usePosthog";
 import { FEATURE_FLAGS } from "@/constants/featureFlags";
 import AliasGeneratorLayout from "@/components/business/AliasGeneratorLayout";
@@ -34,9 +35,13 @@ export default function HomePage() {
           </div>
           <div className="inline-flex items-center gap-3 mb-4">
             <div className="p-3 rounded-2xl bg-gradient-to-br from-blue-500 to-purple-600 shadow-lg">
-              <svg className="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-              </svg>
+              <Image 
+                src="/logo_alias_buddy.png" 
+                alt="Alias Buddy Logo" 
+                width={32}
+                height={32}
+                className="object-contain"
+              />
             </div>
             <h1 className="text-4xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent">
               Alias Buddy

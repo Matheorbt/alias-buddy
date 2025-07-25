@@ -8,20 +8,7 @@
   "theme_color": "#3b82f6",
   "orientation": "portrait-primary",
   "categories": ["productivity", "developer tools", "utilities"],
-  "screenshots": [
-    {
-      "src": "/screenshot-wide.png",
-      "sizes": "1280x800",
-      "type": "image/png",
-      "form_factor": "wide"
-    },
-    {
-      "src": "/screenshot-mobile.png", 
-      "sizes": "750x1334",
-      "type": "image/png",
-      "form_factor": "narrow"
-    }
-  ],
+
   "icons": [
     {
       "src": "/icon-72x72.png",

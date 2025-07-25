@@ -140,6 +140,7 @@ export default function RootLayout({
         {/* Favicon */}
         <link rel="icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/icon-192x192.png" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/icon-192x192.png" />
         
         {/* Structured Data */}
         <script
