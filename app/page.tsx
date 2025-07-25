@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import Image from "next/image";
 import { usePosthog } from "@/hooks/usePosthog";
 import { FEATURE_FLAGS } from "@/constants/featureFlags";
-import { BUSINESS_ASSETS, assetHelpers } from "@/constants/assets";
+import { assetHelpers } from "@/constants/assets";
 import AliasGeneratorLayout from "@/components/business/AliasGeneratorLayout";
 import MobileOptimizations from "@/components/business/MobileOptimizations";
 import SocialShareButtons from "@/components/business/SocialShareButtons";
