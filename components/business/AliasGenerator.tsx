@@ -9,7 +9,7 @@ import { Checkbox } from '@/components/ui/checkbox'
 import { Button } from '@/components/ui/Button'
 import { Badge } from '@/components/ui/badge'
 import { Separator } from '@/components/ui/separator'
-import { Mail, Sparkles, Hash, Calendar, Building, Globe } from 'lucide-react'
+import { Mail, Sparkles, Hash, Calendar, Building, Globe, ChevronDown } from 'lucide-react'
 import { useAliasGeneration, type AliasFormData, type GeneratedAlias } from '@/hooks/useAliasGeneration'
 import { usePosthog } from '@/hooks/usePosthog'
 import { BUSINESS_ENVIRONMENTS, BUSINESS_QUANTITY_OPTIONS, BUSINESS_TEMP_DOMAINS } from '@/constants/emailPatterns'
@@ -34,6 +34,7 @@ const AliasGenerator: React.FC<AliasGeneratorProps> = ({ onAliasesGenerated }) =
   } = useAliasGeneration()
 
   const [isClient, setIsClient] = useState(false)
+  const [showProjectDropdown, setShowProjectDropdown] = useState(false)
   const [formData, setFormData] = useState<AliasFormData>({
     baseEmail: '',
     feature: '',
@@ -183,32 +184,65 @@ const AliasGenerator: React.FC<AliasGeneratorProps> = ({ onAliasesGenerated }) =
               Project Name
               {isClient && recentProjects.length > 0 && (
                 <span className="text-xs text-gray-500 font-normal">
-                  (type to see recent projects)
+                  ({recentProjects.length} recent)
                 </span>
               )}
             </Label>
-            <Input
-              id="project"
-              placeholder={isClient && recentProjects.length > 0 ? "Type project name..." : "my-awesome-app"}
-              value={formData.project}
-              onChange={(e) => handleInputChange('project', e.target.value)}
-              className={`transition-all duration-200 ${errors.project ? 'border-red-300 focus:border-red-500' : 'focus:border-green-500'}`}
-              list={isClient && recentProjects.length > 0 ? "recent-projects" : undefined}
-              autoComplete="off"
-            />
-            {isClient && recentProjects.length > 0 && (
-              <datalist id="recent-projects">
-                {recentProjects.map(project => (
-                  <option key={project} value={project} />
-                ))}
-              </datalist>
+            <div className="relative">
+              <Input
+                id="project"
+                placeholder="my-awesome-app"
+                value={formData.project}
+                onChange={(e) => handleInputChange('project', e.target.value)}
+                onFocus={() => setShowProjectDropdown(true)}
+                className={`transition-all duration-200 ${errors.project ? 'border-red-300 focus:border-red-500' : 'focus:border-green-500'} ${isClient && recentProjects.length > 0 ? 'pr-10' : ''}`}
+                autoComplete="off"
+              />
+              {isClient && recentProjects.length > 0 && (
+                <button
+                  type="button"
+                  onClick={() => setShowProjectDropdown(!showProjectDropdown)}
+                  className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
+                  aria-label="Show recent projects"
+                >
+                  <ChevronDown className={`h-4 w-4 transition-transform ${showProjectDropdown ? 'rotate-180' : ''}`} />
+                </button>
+              )}
+              
+              {/* Dropdown for recent projects */}
+              {isClient && recentProjects.length > 0 && showProjectDropdown && (
+                <div className="absolute z-10 w-full mt-1 bg-white border border-gray-200 rounded-md shadow-lg max-h-48 overflow-y-auto">
+                  <div className="p-2">
+                    <p className="text-xs text-gray-500 mb-2 font-medium">Recent Projects:</p>
+                    {recentProjects.map((project, index) => (
+                      <button
+                        key={project}
+                        type="button"
+                        onClick={() => {
+                          handleInputChange('project', project)
+                          setShowProjectDropdown(false)
+                        }}
+                        className="w-full text-left px-2 py-1.5 text-sm hover:bg-gray-100 rounded transition-colors flex items-center gap-2"
+                      >
+                        <Building className="h-3 w-3 text-green-500 flex-shrink-0" />
+                        <span className="truncate">{project}</span>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+            
+            {/* Click outside to close dropdown */}
+            {showProjectDropdown && (
+              <div 
+                className="fixed inset-0 z-5" 
+                onClick={() => setShowProjectDropdown(false)}
+                onKeyDown={(e) => e.key === 'Escape' && setShowProjectDropdown(false)}
+                tabIndex={-1}
+              />
             )}
-            {isClient && recentProjects.length > 0 && formData.project === '' && (
-              <p className="text-xs text-gray-500">
-                Recent: {recentProjects.slice(0, 3).join(', ')}
-                {recentProjects.length > 3 && '...'}
-              </p>
-            )}
+            
             {errors.project && (
               <p className="text-sm text-red-600 font-medium">{errors.project}</p>
             )}
