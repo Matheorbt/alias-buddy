@@ -34,15 +34,13 @@ export default function HomePage() {
             <SocialShareButtons />
           </div>
           <div className="inline-flex items-center gap-3 mb-4">
-            <div className="p-3 rounded-2xl bg-gradient-to-br from-blue-500 to-purple-600 shadow-lg">
-              <Image 
-                src="/logo_alias_buddy.png" 
-                alt="Alias Buddy Logo" 
-                width={32}
-                height={32}
-                className="object-contain"
-              />
-            </div>
+            <Image 
+              src="/logo_alias_buddy.png" 
+              alt="Alias Buddy Logo" 
+              width={64}
+              height={64}
+              className="object-contain"
+            />
             <h1 className="text-4xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent">
               Alias Buddy
             </h1>
