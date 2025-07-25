@@ -49,10 +49,10 @@ export const metadata: Metadata = {
     type: "website",
     siteName: "Alias Buddy",
     locale: "en_US",
-    url: "https://alias-buddy.vercel.app",
+    url: "https://alias-buddy.com",
     images: [
       {
-        url: "https://alias-buddy.vercel.app/og-image.png",
+        url: "https://alias-buddy.com/og-image.png",
         width: 1200,
         height: 630,
         alt: "Alias Buddy - Email Alias Generator for Developers",
@@ -68,7 +68,7 @@ export const metadata: Metadata = {
     description: "🚀 Generate unique email aliases for dev testing instantly! Clean UI, works offline, privacy-first. Perfect for developers who value their time.",
     images: [
       {
-        url: "https://alias-buddy.vercel.app/twitter-image.png",
+        url: "https://alias-buddy.com/twitter-image.png",
         alt: "Alias Buddy - Email Alias Generator for Developers",
         width: 1200,
         height: 600,
@@ -80,7 +80,7 @@ export const metadata: Metadata = {
     yandex: "your-yandex-verification-code",
   },
   alternates: {
-    canonical: "https://alias-buddy.vercel.app",
+    canonical: "https://alias-buddy.com",
   },
   manifest: "/manifest.json",
 };
@@ -90,7 +90,7 @@ const structuredData = {
   "@type": "WebApplication",
   "name": "Alias Buddy",
   "description": "Generate unique email aliases for development testing. Clean UI, works offline, privacy-first.",
-  "url": "https://alias-buddy.vercel.app",
+  "url": "https://alias-buddy.com",
   "applicationCategory": "DeveloperApplication",
   "operatingSystem": "Any",
   "permissions": "none",
@@ -113,7 +113,7 @@ const structuredData = {
   "inLanguage": "en-US",
   "isAccessibleForFree": true,
   "keywords": "email alias generator, developer tools, privacy, email testing",
-  "screenshot": "https://alias-buddy.vercel.app/og-image.png"
+  "screenshot": "https://alias-buddy.com/og-image.png"
 };
 
 export default function RootLayout({

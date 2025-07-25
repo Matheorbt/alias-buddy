@@ -17,7 +17,7 @@ export const ENV = {
   
   // App specific
   NODE_ENV: process.env.NODE_ENV || 'development',
-  BASE_URL: process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000',
+  BASE_URL: process.env.NEXT_PUBLIC_BASE_URL || 'https://alias-buddy.com',
 } as const
 
 // Type for environment validation

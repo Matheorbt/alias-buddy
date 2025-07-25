@@ -17,7 +17,7 @@ const SocialShareButtons: React.FC = () => {
   const shareData = {
     title: "Alias Buddy - Email Alias Generator for Developers",
     text: "🚀 Found this awesome dev tool! Generate unique email aliases for testing instantly. Clean UI, works offline, privacy-first. Perfect for developers! 🔥",
-    url: typeof window !== 'undefined' ? window.location.href : 'https://alias-buddy.vercel.app',
+    url: typeof window !== 'undefined' ? window.location.href : 'https://alias-buddy.com',
     hashtags: ['DevTools', 'EmailTesting', 'Privacy', 'Developer', 'OpenSource']
   }
 

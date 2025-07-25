@@ -100,4 +100,4 @@ Your PWA is production-ready with:
 - ✅ Service worker caching optimized
 - ✅ Mobile experience polished
 
-**Install Alias Buddy on your devices and enjoy the native app experience!** 📱✨ 
+**Visit [alias-buddy.com](https://alias-buddy.com) and install on your devices for the native app experience!** 📱✨ 
