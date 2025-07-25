@@ -7,7 +7,7 @@ import { FEATURE_FLAGS } from "@/constants/featureFlags";
 import { assetHelpers } from "@/constants/assets";
 import AliasGeneratorLayout from "@/components/business/AliasGeneratorLayout";
 import MobileOptimizations from "@/components/business/MobileOptimizations";
-import SocialShareButtons from "@/components/business/SocialShareButtons";
+
 
 export default function HomePage() {
   const { capture, isFeatureEnabled, identify } = usePosthog();
@@ -32,7 +32,7 @@ export default function HomePage() {
         {/* Header */}
         <div className="text-center mb-12">
           <div className="flex justify-end mb-4">
-            <SocialShareButtons />
+
           </div>
           <div className="inline-flex items-center gap-3 mb-4">
             <Image 
