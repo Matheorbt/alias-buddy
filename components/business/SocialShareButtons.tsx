@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { Button } from '@/components/ui/Button'
 import { Share2, Twitter, MessageCircle, Copy, Check } from 'lucide-react'
 import { usePosthog } from '@/hooks/usePosthog'
@@ -13,6 +13,8 @@ const SocialShareButtons: React.FC = () => {
   const { capture } = usePosthog()
   const { copyToClipboard, isCopied } = useClipboard()
   const [showShareMenu, setShowShareMenu] = useState(false)
+  const [popupPosition, setPopupPosition] = useState<'top' | 'bottom'>('top')
+  const buttonRef = useRef<HTMLButtonElement>(null)
 
   const shareData = {
     title: "Alias Buddy - Email Alias Generator for Developers",
@@ -69,16 +71,49 @@ const SocialShareButtons: React.FC = () => {
     setShowShareMenu(false)
   }
 
+  const calculatePopupPosition = () => {
+    if (!buttonRef.current) return 'top'
+    
+    const buttonRect = buttonRef.current.getBoundingClientRect()
+    const viewportHeight = window.innerHeight
+    const popupHeight = 200 // Approximate popup height
+    const spaceAbove = buttonRect.top
+    const spaceBelow = viewportHeight - buttonRect.bottom
+    
+    // If there's not enough space above but there is below, position below
+    if (spaceAbove < popupHeight && spaceBelow > popupHeight) {
+      return 'bottom'
+    }
+    
+    // Default to top (above button) if there's space or neither position works well
+    return 'top'
+  }
+
   const handleShareToggle = () => {
-    setShowShareMenu(!showShareMenu)
     if (!showShareMenu) {
+      // Calculate position before showing menu
+      setPopupPosition(calculatePopupPosition())
       capture('share_menu_opened')
     }
+    setShowShareMenu(!showShareMenu)
   }
+
+  // Recalculate position on window resize
+  useEffect(() => {
+    const handleResize = () => {
+      if (showShareMenu) {
+        setPopupPosition(calculatePopupPosition())
+      }
+    }
+
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [showShareMenu])
 
   return (
     <div className="relative">
       <Button
+        ref={buttonRef}
         variant="outline"
         size="sm"
         onClick={handleShareToggle}
@@ -89,7 +124,11 @@ const SocialShareButtons: React.FC = () => {
       </Button>
 
       {showShareMenu && (
-        <div className="absolute bottom-full mb-2 right-0 bg-white rounded-lg shadow-lg border border-gray-200 p-2 z-50 min-w-48">
+        <div className={`absolute right-0 bg-white rounded-lg shadow-lg border border-gray-200 p-2 z-50 min-w-48 ${
+          popupPosition === 'top' 
+            ? 'bottom-full mb-2' 
+            : 'top-full mt-2'
+        }`}>
           <div className="space-y-1">
             <button
               onClick={() => handleShare('twitter')}
