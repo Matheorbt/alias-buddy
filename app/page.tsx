@@ -55,7 +55,7 @@ export default function HomePage() {
             <span className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full">✨ Works Offline</span>
             <span className="px-3 py-1 bg-green-100 text-green-800 rounded-full">🔒 Privacy-First</span>
             <span className="px-3 py-1 bg-purple-100 text-purple-800 rounded-full">📱 PWA Ready</span>
-            <span className="px-3 py-1 bg-orange-100 text-orange-800 rounded-full">🆓 Free & Open Source</span>
+            <span className="px-3 py-1 bg-orange-100 text-orange-800 rounded-full">🆓 Free to Use</span>
           </div>
         </div>
 
