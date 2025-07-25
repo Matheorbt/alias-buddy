@@ -18,8 +18,6 @@ export interface AliasFormData {
   project: string
   environment: string
   quantity: number
-  useTempDomain: boolean
-  tempDomain: string
 }
 
 export interface GeneratedAlias {
@@ -98,7 +96,6 @@ export const useAliasGeneration = () => {
       const { localPart, domain } = parseEmail(data.baseEmail)
       const sanitizedFeature = sanitizeForEmail(data.feature)
       const date = data.includeDate ? formatDate() : ''
-      const finalDomain = data.useTempDomain ? data.tempDomain : domain
 
       const aliases: GeneratedAlias[] = []
 
@@ -106,7 +103,7 @@ export const useAliasGeneration = () => {
         const hash = generateShortHash()
         const aliasParts = [sanitizedFeature, date, hash].filter(Boolean)
         const aliasString = aliasParts.join('-')
-        const email = `${localPart}+${aliasString}@${finalDomain}`
+        const email = `${localPart}+${aliasString}@${domain}`
 
         aliases.push({
           id: generateShortHash(),
@@ -131,8 +128,6 @@ export const useAliasGeneration = () => {
         environment: data.environment,
         quantity: data.quantity,
         includeDate: data.includeDate,
-        useTempDomain: data.useTempDomain,
-        tempDomain: data.tempDomain,
       })
 
       // Track generation event
@@ -140,7 +135,6 @@ export const useAliasGeneration = () => {
         quantity: data.quantity,
         environment: data.environment,
         includes_date: data.includeDate,
-        uses_temp_domain: data.useTempDomain,
         feature_length: data.feature.length,
         project: data.project,
       })

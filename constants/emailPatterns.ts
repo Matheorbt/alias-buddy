@@ -19,13 +19,6 @@ export const BUSINESS_QUANTITY_OPTIONS = [
   { value: 100, label: '100 emails' },
 ] as const
 
-export const BUSINESS_TEMP_DOMAINS = [
-  '10minutemail.com',
-  'temp-mail.org',
-  'guerrillamail.com',
-  'mailinator.com',
-] as const
-
 // LocalStorage keys for business data
 export const BUSINESS_STORAGE_KEYS = {
   GENERATED_ALIASES: 'alias-buddy-generated-emails',

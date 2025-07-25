@@ -9,10 +9,10 @@ import { Checkbox } from '@/components/ui/checkbox'
 import { Button } from '@/components/ui/Button'
 import { Badge } from '@/components/ui/badge'
 import { Separator } from '@/components/ui/separator'
-import { Mail, Sparkles, Hash, Calendar, Building, Globe, ChevronDown } from 'lucide-react'
+import { Mail, Sparkles, Hash, Calendar, Building, ChevronDown } from 'lucide-react'
 import { useAliasGeneration, type AliasFormData, type GeneratedAlias } from '@/hooks/useAliasGeneration'
 import { usePosthog } from '@/hooks/usePosthog'
-import { BUSINESS_ENVIRONMENTS, BUSINESS_QUANTITY_OPTIONS, BUSINESS_TEMP_DOMAINS } from '@/constants/emailPatterns'
+import { BUSINESS_ENVIRONMENTS, BUSINESS_QUANTITY_OPTIONS } from '@/constants/emailPatterns'
 import { getRemainingChars, isValidEmail } from '@/lib/emailUtils'
 
 /**
@@ -42,8 +42,6 @@ const AliasGenerator: React.FC<AliasGeneratorProps> = ({ onAliasesGenerated }) =
     project: '',
     environment: 'dev', // Always start with default to avoid hydration mismatch
     quantity: 1, // Always start with default to avoid hydration mismatch
-    useTempDomain: false, // Always start with default to avoid hydration mismatch
-    tempDomain: BUSINESS_TEMP_DOMAINS[0],
   })
 
   // Ensure we only show client-side data after hydration
@@ -56,8 +54,6 @@ const AliasGenerator: React.FC<AliasGeneratorProps> = ({ onAliasesGenerated }) =
       includeDate: formSettings.includeDate ?? true,
       environment: formSettings.environment ?? 'dev',
       quantity: formSettings.quantity ?? 1,
-      useTempDomain: formSettings.useTempDomain ?? false,
-      tempDomain: formSettings.tempDomain ?? BUSINESS_TEMP_DOMAINS[0],
     }))
   }, [formSettings])
 
@@ -92,8 +88,6 @@ const AliasGenerator: React.FC<AliasGeneratorProps> = ({ onAliasesGenerated }) =
       project: '',
       environment: 'dev',
       quantity: 1,
-      useTempDomain: false,
-      tempDomain: BUSINESS_TEMP_DOMAINS[0],
     })
     clearFormData()
     if (onAliasesGenerated) {
@@ -306,37 +300,7 @@ const AliasGenerator: React.FC<AliasGeneratorProps> = ({ onAliasesGenerated }) =
             </Label>
           </div>
 
-          <div className="space-y-3">
-            <div className="flex items-center space-x-3">
-              <Checkbox
-                id="useTempDomain"
-                checked={formData.useTempDomain}
-                onCheckedChange={(checked) => handleInputChange('useTempDomain', checked)}
-              />
-              <Label htmlFor="useTempDomain" className="text-sm font-medium flex items-center gap-2 cursor-pointer">
-                <Globe className="h-4 w-4 text-green-500" />
-                Use temporary email domain
-              </Label>
-            </div>
 
-            {formData.useTempDomain && (
-              <Select 
-                value={formData.tempDomain} 
-                onValueChange={(value) => handleInputChange('tempDomain', value)}
-              >
-                <SelectTrigger className="ml-6 max-w-xs focus:border-green-500">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  {BUSINESS_TEMP_DOMAINS.map(domain => (
-                    <SelectItem key={domain} value={domain}>
-                      {domain}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            )}
-          </div>
         </div>
 
         <Separator className="opacity-30" />
