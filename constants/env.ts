@@ -1,8 +1,19 @@
 // Environment variables mapping for better type safety and organization
 export const ENV = {
-  // Core analytics & monitoring
-  POSTHOG_KEY: process.env.NEXT_PUBLIC_POSTHOG_KEY!,
-  POSTHOG_HOST: process.env.NEXT_PUBLIC_POSTHOG_HOST || 'https://app.posthog.com',
+  // Analytics
+  POSTHOG_KEY: process.env.NEXT_PUBLIC_POSTHOG_KEY || '',
+  POSTHOG_HOST: process.env.NEXT_PUBLIC_POSTHOG_HOST || 'https://eu.i.posthog.com',
+  
+  // Core infrastructure
+  NODE_ENV: process.env.NODE_ENV || 'development',
+  BASE_URL: process.env.NEXT_PUBLIC_BASE_URL || 'https://alias-buddy.com',
+  
+  // Cloudflare (Core)
+  CLOUDFLARE_ACCOUNT_ID: process.env.CLOUDFLARE_ACCOUNT_ID || '',
+  CLOUDFLARE_R2_ACCESS_KEY: process.env.CLOUDFLARE_R2_ACCESS_KEY || '',
+  CLOUDFLARE_R2_SECRET_KEY: process.env.CLOUDFLARE_R2_SECRET_KEY || '',
+  CLOUDFLARE_R2_BUCKET: process.env.CLOUDFLARE_R2_BUCKET || '',
+  CLOUDFLARE_IMAGES_ACCOUNT_HASH: process.env.CLOUDFLARE_IMAGES_ACCOUNT_HASH || '',
   
   // Authentication (when you add it)
   // SUPABASE_URL: process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -16,8 +27,8 @@ export const ENV = {
   // CHATWOOT_TOKEN: process.env.CHATWOOT_TOKEN,
   
   // App specific
-  NODE_ENV: process.env.NODE_ENV || 'development',
-  BASE_URL: process.env.NEXT_PUBLIC_BASE_URL || 'https://alias-buddy.com',
+  // NODE_ENV: process.env.NODE_ENV || 'development',
+  // BASE_URL: process.env.NEXT_PUBLIC_BASE_URL || 'https://alias-buddy.com',
 } as const
 
 // Type for environment validation

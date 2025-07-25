@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import Image from "next/image";
 import { usePosthog } from "@/hooks/usePosthog";
 import { FEATURE_FLAGS } from "@/constants/featureFlags";
+import { BUSINESS_ASSETS, assetHelpers } from "@/constants/assets";
 import AliasGeneratorLayout from "@/components/business/AliasGeneratorLayout";
 import MobileOptimizations from "@/components/business/MobileOptimizations";
 import SocialShareButtons from "@/components/business/SocialShareButtons";
@@ -35,7 +36,7 @@ export default function HomePage() {
           </div>
           <div className="inline-flex items-center gap-3 mb-4">
             <Image 
-              src="/logo_alias_buddy.png" 
+              src={assetHelpers.getLogo({ width: 64, height: 64 })}
               alt="Alias Buddy Logo" 
               width={64}
               height={64}
