@@ -1,12 +1,17 @@
 {
-    "rewrites": [
-      {
-        "source": "/relay-G1q6/static/(.*)",
-        "destination": "https://eu-assets.i.posthog.com/static/$1"
-      },
-      {
-        "source": "/relay-G1q6/(.*)",
-        "destination": "https://eu.i.posthog.com/$1"
-      }
-    ]
-  }
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        }
+      ]
+    }
+  ]
+}

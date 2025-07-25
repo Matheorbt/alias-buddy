@@ -11,7 +11,6 @@ import { Badge } from '@/components/ui/badge'
 import { Separator } from '@/components/ui/separator'
 import { Mail, Sparkles, Hash, Calendar, Building, Globe } from 'lucide-react'
 import { useAliasGeneration, type AliasFormData, type GeneratedAlias } from '@/hooks/useAliasGeneration'
-import { usePosthog } from '@/hooks/usePosthog'
 import { BUSINESS_ENVIRONMENTS, BUSINESS_QUANTITY_OPTIONS, BUSINESS_TEMP_DOMAINS } from '@/constants/emailPatterns'
 import { getRemainingChars, isValidEmail } from '@/lib/emailUtils'
 
@@ -23,7 +22,6 @@ interface AliasGeneratorProps {
 }
 
 const AliasGenerator: React.FC<AliasGeneratorProps> = ({ onAliasesGenerated }) => {
-  const { capture } = usePosthog()
   const { 
     errors, 
     isGenerating, 
@@ -60,7 +58,7 @@ const AliasGenerator: React.FC<AliasGeneratorProps> = ({ onAliasesGenerated }) =
     }))
   }, [formSettings])
 
-  const handleInputChange = (field: keyof AliasFormData, value: any) => {
+  const handleInputChange = (field: keyof AliasFormData, value: string | number | boolean) => {
     setFormData(prev => ({
       ...prev,
       [field]: value

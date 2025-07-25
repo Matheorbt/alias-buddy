@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/Button'
 import { Badge } from '@/components/ui/badge'
@@ -31,7 +31,7 @@ const EmailPreview: React.FC<EmailPreviewProps> = ({ aliases, onClear }) => {
     }
   }
 
-  const handleCopyIndividual = (email: string) => {
+  const handleCopyIndividual = () => {
     capture('alias_copied', { type: 'individual' })
   }
 
@@ -177,11 +177,11 @@ const EmailPreview: React.FC<EmailPreviewProps> = ({ aliases, onClear }) => {
                   <code className="text-sm font-mono bg-white px-2 py-1 rounded border text-gray-800 break-all">
                     {alias.email}
                   </code>
-                  <CopyButton
-                    text={alias.email}
-                    onCopy={() => handleCopyIndividual(alias.email)}
-                    size="sm"
-                  />
+                                     <CopyButton
+                     text={alias.email}
+                     onCopy={handleCopyIndividual}
+                     size="sm"
+                   />
                 </div>
                 
                 <div className="flex flex-wrap gap-2 text-xs">
