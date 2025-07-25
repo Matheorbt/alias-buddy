@@ -1,5 +1,24 @@
 import type { NextConfig } from "next";
 
+const withPWA = require('next-pwa')({
+  dest: 'public',
+  register: true,
+  skipWaiting: true,
+  disable: process.env.NODE_ENV === 'development', // Disable in dev for easier debugging
+  runtimeCaching: [
+    {
+      urlPattern: /^https?.*/,
+      handler: 'CacheFirst',
+      options: {
+        cacheName: 'offlineCache',
+        expiration: {
+          maxEntries: 200,
+        },
+      },
+    },
+  ],
+});
+
 const nextConfig: NextConfig = {
   /* config options here */
   async rewrites() {
@@ -22,4 +41,4 @@ const nextConfig: NextConfig = {
   skipTrailingSlashRedirect: true,
 };
 
-export default nextConfig;
+export default withPWA(nextConfig);

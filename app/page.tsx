@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { usePosthog } from "@/hooks/usePosthog";
 import { FEATURE_FLAGS } from "@/constants/featureFlags";
 import AliasGeneratorLayout from "@/components/business/AliasGeneratorLayout";
+import MobileOptimizations from "@/components/business/MobileOptimizations";
 
 export default function HomePage() {
   const { capture, isFeatureEnabled, identify } = usePosthog();
@@ -22,8 +23,9 @@ export default function HomePage() {
   }, [capture, identify]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50/30 to-purple-50/20">
-      <div className="container mx-auto px-4 py-12">
+    <MobileOptimizations>
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50/30 to-purple-50/20">
+        <div className="container mx-auto px-4 py-12">
         {/* Header */}
         <div className="text-center mb-12">
           <div className="inline-flex items-center gap-3 mb-4">
@@ -76,5 +78,6 @@ export default function HomePage() {
         </div>
       </div>
     </div>
+    </MobileOptimizations>
   );
 }
