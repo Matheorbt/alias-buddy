@@ -11,6 +11,7 @@ import { Badge } from '@/components/ui/badge'
 import { Separator } from '@/components/ui/separator'
 import { Mail, Sparkles, Hash, Calendar, Building, Globe } from 'lucide-react'
 import { useAliasGeneration, type AliasFormData, type GeneratedAlias } from '@/hooks/useAliasGeneration'
+import { usePosthog } from '@/hooks/usePosthog'
 import { BUSINESS_ENVIRONMENTS, BUSINESS_QUANTITY_OPTIONS, BUSINESS_TEMP_DOMAINS } from '@/constants/emailPatterns'
 import { getRemainingChars, isValidEmail } from '@/lib/emailUtils'
 
@@ -22,6 +23,7 @@ interface AliasGeneratorProps {
 }
 
 const AliasGenerator: React.FC<AliasGeneratorProps> = ({ onAliasesGenerated }) => {
+  const { capture } = usePosthog()
   const { 
     errors, 
     isGenerating, 
@@ -66,6 +68,15 @@ const AliasGenerator: React.FC<AliasGeneratorProps> = ({ onAliasesGenerated }) =
   }
 
   const handleGenerate = async () => {
+    // Track button click event
+    capture('generate_button_clicked', {
+      has_base_email: Boolean(formData.baseEmail),
+      has_feature: Boolean(formData.feature),
+      has_project: Boolean(formData.project),
+      quantity: formData.quantity,
+      environment: formData.environment,
+    })
+
     const aliases = await generateAliases(formData)
     if (onAliasesGenerated) {
       onAliasesGenerated(aliases)
@@ -170,14 +181,20 @@ const AliasGenerator: React.FC<AliasGeneratorProps> = ({ onAliasesGenerated }) =
             <Label htmlFor="project" className="text-sm font-medium flex items-center gap-2">
               <Building className="h-4 w-4 text-green-500" />
               Project Name
+              {isClient && recentProjects.length > 0 && (
+                <span className="text-xs text-gray-500 font-normal">
+                  (type to see recent projects)
+                </span>
+              )}
             </Label>
             <Input
               id="project"
-              placeholder="my-awesome-app"
+              placeholder={isClient && recentProjects.length > 0 ? "Type project name..." : "my-awesome-app"}
               value={formData.project}
               onChange={(e) => handleInputChange('project', e.target.value)}
               className={`transition-all duration-200 ${errors.project ? 'border-red-300 focus:border-red-500' : 'focus:border-green-500'}`}
               list={isClient && recentProjects.length > 0 ? "recent-projects" : undefined}
+              autoComplete="off"
             />
             {isClient && recentProjects.length > 0 && (
               <datalist id="recent-projects">
@@ -185,6 +202,12 @@ const AliasGenerator: React.FC<AliasGeneratorProps> = ({ onAliasesGenerated }) =
                   <option key={project} value={project} />
                 ))}
               </datalist>
+            )}
+            {isClient && recentProjects.length > 0 && formData.project === '' && (
+              <p className="text-xs text-gray-500">
+                Recent: {recentProjects.slice(0, 3).join(', ')}
+                {recentProjects.length > 3 && '...'}
+              </p>
             )}
             {errors.project && (
               <p className="text-sm text-red-600 font-medium">{errors.project}</p>
