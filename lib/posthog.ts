@@ -1,10 +1,13 @@
 import posthog from 'posthog-js'
+import { ENV } from '@/constants/env'
 
 export const initPostHog = () => {
   if (typeof window !== 'undefined') {
-    posthog.init(process.env.NEXT_PUBLIC_POSTHOG_KEY!, {
-      api_host: process.env.NEXT_PUBLIC_POSTHOG_HOST || 'https://app.posthog.com',
+    posthog.init(ENV.POSTHOG_KEY, {
+      api_host: ENV.POSTHOG_HOST,
       person_profiles: 'identified_only',
+      capture_pageview: false, // Disable automatic pageview capture for more control
+      debug: ENV.NODE_ENV === 'development',
     })
   }
 }
