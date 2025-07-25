@@ -36,7 +36,7 @@ export default function HomePage() {
           </div>
           <div className="inline-flex items-center gap-3 mb-4">
             <Image 
-              src={assetHelpers.getLogo({ width: 64, height: 64 })}
+              src={assetHelpers.getLogo()}
               alt="Alias Buddy Logo" 
               width={64}
               height={64}

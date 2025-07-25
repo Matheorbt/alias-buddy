@@ -31,27 +31,16 @@ export const BUSINESS_ASSETS = {
  */
 export const assetHelpers = {
   /**
-   * Get logo with specific size optimization
+   * Get logo (served through Cloudflare CDN)
    */
-  getLogo: (size: { width: number; height: number }) =>
-    imageUtils.getOptimizedUrl('/logo_alias_buddy.png', {
-      width: size.width,
-      height: size.height,
-      quality: 90,
-      format: 'webp',
-    }),
+  getLogo: () => imageUtils.getOptimizedUrl('/logo_alias_buddy.png'),
   
   /**
-   * Get social image with proper dimensions
+   * Get social image (served through Cloudflare CDN)
    */
   getSocialImage: (platform: 'og' | 'twitter') => {
     const imagePath = platform === 'twitter' ? '/twitter-image.png' : '/og-image.png'
-    return imageUtils.getOptimizedUrl(imagePath, {
-      width: platform === 'twitter' ? 1200 : 1200,
-      height: platform === 'twitter' ? 600 : 630,
-      quality: 85,
-      format: 'jpeg',
-    })
+    return imageUtils.getOptimizedUrl(imagePath)
   },
 } as const
 
