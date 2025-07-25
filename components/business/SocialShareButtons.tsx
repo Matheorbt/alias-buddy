@@ -59,7 +59,7 @@ const SocialShareButtons: React.FC = () => {
                text: shareData.text,
                url: shareData.url,
              })
-           } catch (err) {
+           } catch {
              console.log('Share canceled')
            }
          }

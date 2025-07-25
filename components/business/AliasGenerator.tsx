@@ -214,7 +214,7 @@ const AliasGenerator: React.FC<AliasGeneratorProps> = ({ onAliasesGenerated }) =
                 <div className="absolute z-10 w-full mt-1 bg-white border border-gray-200 rounded-md shadow-lg max-h-48 overflow-y-auto">
                   <div className="p-2">
                     <p className="text-xs text-gray-500 mb-2 font-medium">Recent Projects:</p>
-                    {recentProjects.map((project, index) => (
+                                         {recentProjects.map((project) => (
                       <button
                         key={project}
                         type="button"
