@@ -15,12 +15,15 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Alias Buddy - Email Alias Generator",
-  description: "Generate unique email aliases for development testing. Clean, fast, and developer-friendly.",
-  keywords: ["email", "alias", "generator", "development", "testing", "privacy", "developer tools"],
+  title: "Alias Buddy - Email Alias Generator for Developers",
+  description: "🚀 Generate unique email aliases for dev testing instantly! Clean UI, works offline, privacy-first. Perfect for developers who value their time. Free & open-source.",
+  keywords: ["email", "alias", "generator", "development", "testing", "privacy", "developer tools", "dev tools", "email testing", "alias generator"],
   authors: [{ name: "Matheo Robert", url: "https://x.com/matheorbt_" }],
   creator: "Matheo Robert",
+  publisher: "Matheo Robert",
   applicationName: "Alias Buddy",
+  category: "Developer Tools",
+  classification: "Productivity Tool",
   appleWebApp: {
     capable: true,
     title: "Alias Buddy",
@@ -29,19 +32,88 @@ export const metadata: Metadata = {
   formatDetection: {
     telephone: false,
   },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
   openGraph: {
-    title: "Alias Buddy - Email Alias Generator",
-    description: "Generate unique email aliases for development testing. Clean, fast, and developer-friendly.",
+    title: "Alias Buddy - Email Alias Generator for Developers",
+    description: "🚀 Generate unique email aliases for dev testing instantly! Clean UI, works offline, privacy-first. Perfect for developers who value their time.",
     type: "website",
     siteName: "Alias Buddy",
+    locale: "en_US",
+    url: "https://alias-buddy.vercel.app",
+    images: [
+      {
+        url: "https://alias-buddy.vercel.app/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Alias Buddy - Email Alias Generator for Developers",
+        type: "image/png",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Alias Buddy - Email Alias Generator",
-    description: "Generate unique email aliases for development testing. Clean, fast, and developer-friendly.",
+    site: "@matheorbt_",
     creator: "@matheorbt_",
+    title: "Alias Buddy - Email Alias Generator for Developers",
+    description: "🚀 Generate unique email aliases for dev testing instantly! Clean UI, works offline, privacy-first. Perfect for developers who value their time.",
+    images: [
+      {
+        url: "https://alias-buddy.vercel.app/twitter-image.png",
+        alt: "Alias Buddy - Email Alias Generator for Developers",
+        width: 1200,
+        height: 600,
+      },
+    ],
+  },
+  verification: {
+    google: "your-google-verification-code",
+    yandex: "your-yandex-verification-code",
+  },
+  alternates: {
+    canonical: "https://alias-buddy.vercel.app",
   },
   manifest: "/manifest.json",
+};
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Alias Buddy",
+  "description": "Generate unique email aliases for development testing. Clean UI, works offline, privacy-first.",
+  "url": "https://alias-buddy.vercel.app",
+  "applicationCategory": "DeveloperApplication",
+  "operatingSystem": "Any",
+  "permissions": "none",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "author": {
+    "@type": "Person",
+    "name": "Matheo Robert",
+    "url": "https://x.com/matheorbt_"
+  },
+  "creator": {
+    "@type": "Person", 
+    "name": "Matheo Robert",
+    "url": "https://x.com/matheorbt_"
+  },
+  "datePublished": "2024-12-20",
+  "inLanguage": "en-US",
+  "isAccessibleForFree": true,
+  "keywords": "email alias generator, developer tools, privacy, email testing",
+  "screenshot": "https://alias-buddy.vercel.app/og-image.png"
 };
 
 export default function RootLayout({
@@ -68,6 +140,12 @@ export default function RootLayout({
         {/* Favicon */}
         <link rel="icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/icon-192x192.png" />
+        
+        {/* Structured Data */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+        />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}

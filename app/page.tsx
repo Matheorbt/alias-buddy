@@ -5,6 +5,7 @@ import { usePosthog } from "@/hooks/usePosthog";
 import { FEATURE_FLAGS } from "@/constants/featureFlags";
 import AliasGeneratorLayout from "@/components/business/AliasGeneratorLayout";
 import MobileOptimizations from "@/components/business/MobileOptimizations";
+import SocialShareButtons from "@/components/business/SocialShareButtons";
 
 export default function HomePage() {
   const { capture, isFeatureEnabled, identify } = usePosthog();
@@ -28,6 +29,9 @@ export default function HomePage() {
         <div className="container mx-auto px-4 py-12">
         {/* Header */}
         <div className="text-center mb-12">
+          <div className="flex justify-end mb-4">
+            <SocialShareButtons />
+          </div>
           <div className="inline-flex items-center gap-3 mb-4">
             <div className="p-3 rounded-2xl bg-gradient-to-br from-blue-500 to-purple-600 shadow-lg">
               <svg className="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -38,10 +42,16 @@ export default function HomePage() {
               Alias Buddy
             </h1>
           </div>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
-            Generate unique email aliases for your development testing. 
+          <p className="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed mb-4">
+            🚀 Generate unique email aliases for your development testing. 
             Clean, fast, and developer-friendly.
           </p>
+          <div className="flex flex-wrap justify-center gap-2 text-sm">
+            <span className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full">✨ Works Offline</span>
+            <span className="px-3 py-1 bg-green-100 text-green-800 rounded-full">🔒 Privacy-First</span>
+            <span className="px-3 py-1 bg-purple-100 text-purple-800 rounded-full">📱 PWA Ready</span>
+            <span className="px-3 py-1 bg-orange-100 text-orange-800 rounded-full">🆓 Free & Open Source</span>
+          </div>
         </div>
 
         {/* Main Generator */}
